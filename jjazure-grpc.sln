@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jjgrpc-client", "jjgrpc-client\jjgrpc-client.csproj", "{2AB41FB8-7618-46E2-961B-942BA393AC56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{333C08E8-A4EF-4F2C-B393-21CA404FBC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{333C08E8-A4EF-4F2C-B393-21CA404FBC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{333C08E8-A4EF-4F2C-B393-21CA404FBC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AB41FB8-7618-46E2-961B-942BA393AC56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AB41FB8-7618-46E2-961B-942BA393AC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AB41FB8-7618-46E2-961B-942BA393AC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AB41FB8-7618-46E2-961B-942BA393AC56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

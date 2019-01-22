@@ -12,7 +12,7 @@ namespace jjgrpcs_server
         {
             public override Task<JJTaskDetail> AddTask(JJTask task, ServerCallContext context)
             {
-                return Task.FromResult(new JJTaskDetail { Id = 100, Name = "New task" });
+                return Task.FromResult(new JJTaskDetail { Id = 100, Name = task.Name });
             }
         }
 
