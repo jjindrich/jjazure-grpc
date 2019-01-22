@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.helloworld";
+option java_outer_classname = "HelloWorldProto";
+option objc_class_prefix = "HLW";
+
+package JJTaskGrpcDemo;
+
+service JJTaskManager {
+  rpc AddTask (JJTask) returns (JJTaskDetail) {}
+}
+
+message JJTask {
+  string name = 1;
+}
+
+message JJTaskDetail {
+  int32 id = 1;
+  string name = 2;
+}
