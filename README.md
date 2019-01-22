@@ -1,6 +1,8 @@
 # JJAzure gRCP service running on Azure
 Playground for gRPC in Azure
 
+About gRPC - https://grpc.io/about/
+
 ## Create gRPC server
 
 I will create new server running service called JJTaskManager.
