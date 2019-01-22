@@ -6,6 +6,7 @@ Playground for gRPC in Azure
 I will create new server running service called JJTaskManager.
 
 Create new dotNet Core project and follow this steps:
-- add nuget Grpc, Grpc.Tools, Google.Protobuf
+- add nuget Grpc, Google.Protobuf
+- add nuget Grpc.Tools to compile proto file (set Build action to Protobuf compiler)
 - define gRPC service and messages (jjtask.proto)
-- add code to run server
+- add code to run server (program.cs)
