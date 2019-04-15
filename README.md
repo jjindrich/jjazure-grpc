@@ -47,6 +47,25 @@ Run code
 go run .\main.go
 ```
 
-## Prepare Docker image
+## Test gRPC server in Azure
 
-Visual Studio - add Container Orchestrator Support
+## Run Docker locally
+
+```ps
+docker run -it -p 80:80 jjgrpcsserver:latest
+```
+
+## Use Azure Web App for Containers to run gRPC server
+
+Publish to Azure Container Registry from Visual Studio.
+
+```ps
+docker tag jjgrpcsserver:dev jjcontainers.azurecr.io/jjgrpcsserver:latest
+docker push jjcontainers.azurecr.io/jjgrpcsserver:latest
+```
+
+Create new Azure Web App for Containers on Linux and use container from registry.
+
+Deployment not working, getting this error from Web App
+2019-04-15 14:07:59.204 ERROR - Container jjgrpc_0 for site jjgrpc has exited, failing site start
+2019-04-15 14:07:59.211 ERROR - Container jjgrpc_0 didn't respond to HTTP pings on port: 80, failing site start. See container logs for debugging.

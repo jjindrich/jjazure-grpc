@@ -18,7 +18,7 @@ namespace jjgrpcs_server
 
         static void Main(string[] args)
         {
-            const int Port = 8080;
+            const int Port = 80;
 
             Server server = new Server
             {

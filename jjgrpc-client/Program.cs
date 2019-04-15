@@ -6,7 +6,7 @@ namespace jjgrpc_client
 {
     class Program
     {
-        const int Port = 8080;
+        const int Port = 80;
         
         static void Main(string[] args)
         {
