@@ -49,23 +49,31 @@ go run .\main.go
 
 ## Test gRPC server in Azure
 
-## Run Docker locally
+### Run Docker locally
+
+Be sure you are running gRpc server correctly, check this issue https://stackoverflow.com/questions/52454840/c-sharp-grpc-client-not-able-to-connect-to-grpc-server-hosted-in-dockerfor-wind
 
 ```ps
 docker run -it -p 80:80 jjgrpcsserver:latest
 ```
 
-## Use Azure Web App for Containers to run gRPC server
+Run test Go client
+
+### Publish to Azure Container Registry
 
 Publish to Azure Container Registry from Visual Studio.
 
 ```ps
-docker tag jjgrpcsserver:dev jjcontainers.azurecr.io/jjgrpcsserver:latest
+docker tag jjgrpcsserver:latest jjcontainers.azurecr.io/jjgrpcsserver:latest
 docker push jjcontainers.azurecr.io/jjgrpcsserver:latest
 ```
+
+### Use Azure Web App for Containers to run gRPC server
 
 Create new Azure Web App for Containers on Linux and use container from registry.
 
 Deployment not working, getting this error from Web App
 2019-04-15 14:07:59.204 ERROR - Container jjgrpc_0 for site jjgrpc has exited, failing site start
 2019-04-15 14:07:59.211 ERROR - Container jjgrpc_0 didn't respond to HTTP pings on port: 80, failing site start. See container logs for debugging.
+
+There is problem with checking Docker container is live, trying access HTTP on port 80.
