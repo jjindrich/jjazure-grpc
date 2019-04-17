@@ -77,3 +77,17 @@ Deployment not working, getting this error from Web App
 2019-04-15 14:07:59.211 ERROR - Container jjgrpc_0 didn't respond to HTTP pings on port: 80, failing site start. See container logs for debugging.
 
 There is problem with checking Docker container is live, trying access HTTP on port 80.
+
+### User Azure Container Instance to run gRPC server
+
+Create new Container Instance from Azure Container Registry - click Run instance
+
+![Azure Container Registry Run Instance](media/acr-instance.png)
+
+Now run test client, first change connection to ip address of Container instance.
+
+```ps
+go run .\main.go
+2019/04/17 12:49:06 JJTaskManager client created...
+2019/04/17 12:49:06 Result: Muj task
+```
