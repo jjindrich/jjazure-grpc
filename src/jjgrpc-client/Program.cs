@@ -10,8 +10,18 @@ namespace jjgrpc_client
     {
         static async Task Main(string[] args)
         {
+            bool secure = true;
             // The port number(5001) must match the port of the gRPC server.
-            using var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            string url = "https://localhost:5001";
+
+            // test docker localy
+            secure = false;
+            //url = "http://localhost";
+            //url = "http://20.50.164.47";
+            if (!secure)
+                AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
+            using var channel = GrpcChannel.ForAddress(url);
             var client = new Greeter.GreeterClient(channel);
             var reply = await client.SayHelloAsync(
                               new HelloRequest { Name = "GreeterClient" });
