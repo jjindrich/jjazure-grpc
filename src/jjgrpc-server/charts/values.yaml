@@ -1,0 +1,53 @@
+# Default values for charts.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: jjakscontainers.azurecr.io/jjgrpcserver
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: "jjgrpcserver"
+fullnameOverride: "jjgrpcserver"
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    #nginx.ingress.kubernetes.io/rewrite-target: "/jjgrpc/$2"
+    #nginx.ingress.kubernetes.io/backend-protocol: "GRPCS"
+    nginx.ingress.kubernetes.io/grpc-backend: "true"
+  #path: /jjgrpc(/|$)(.*)  
+  path: /
+  # hosts:
+  #   - 13.69.76.199.xip.io
+  tls: []
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector:
+  "kubernetes.io/os": linux
+
+tolerations: []
+
+affinity: {}

@@ -2,10 +2,9 @@
 Playground for gRPC in Azure
 
 About gRPC - https://grpc.io/about/
+Compare gRpc with HTTP Api - https://docs.microsoft.com/en-us/aspnet/core/grpc/comparison?view=aspnetcore-3.1
 
 Introduction to gRPC on .NET Core 3.1 - https://docs.microsoft.com/en-us/aspnet/core/grpc
-
-Compare gRpc with HTTP Api - https://docs.microsoft.com/en-us/aspnet/core/grpc/comparison?view=aspnetcore-3.1
 
 *How to use with dotnet core 2, check [this](\src-dotnet2\readme.md)*
 
@@ -44,9 +43,40 @@ About encrypted communication
 
 Not supported because http.sys - https://docs.microsoft.com/en-us/aspnet/core/grpc/?view=aspnetcore-3.1
 
-### User Azure Container Instances
+### Use Azure Container Instances
 
-Deploy with Azure ACI with port 80.
+Deploy with Azure ACI with port 80. There is no scalling/balancing model.
 
-Check service is working - OK - getting message.
+Check service is running - OK - getting message.
+
+### Use Service Fabric
+
+Not supported Http/2 proxy - https://github.com/microsoft/service-fabric/issues/828
+
+### Use Azure Kubernetes Service
+
+Prepare for deployment and fill-in values, modify ingess template (without host)
+
+```bash
+helm create charts
+```
+
+Deploy to AKS with port 80
+
+```bash
+helm install jjgrpcserver charts
+```
+
+Check service is running - OK - getting message.
+
+Balancing problem
+
+- multiplexing of multiple HTTP/2 calls over a single TCP connection
+- scale on client - bad way because of how to manage list of backends
+- L4 load balancer scalling clients-server (selects one of backend servers)
+   - not scalling server-server communication for long living connections
+- L7 reverse proxy to enable scalling
+  - linkerd (sidecar reverse proxy)
+  - Nginx ingress (annotation grpc) or Traefik ingress 
+  - AppGw not supported (http/2 backend not supported)
 

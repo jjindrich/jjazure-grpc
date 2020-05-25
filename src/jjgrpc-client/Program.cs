@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Grpc.Net.Client;
@@ -15,11 +16,22 @@ namespace jjgrpc_client
             string url = "https://localhost:5001";
 
             // test docker localy
-            secure = false;
-            //url = "http://localhost";
-            //url = "http://20.50.164.47";
+            //url = "http://localhost";            
+
+            // process args
+            if (args.Count() > 0)
+            {
+                url = args[0].ToString();
+            }
+
+            if (!url.Contains("https://"))
+                secure = false;
+
             if (!secure)
                 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
+            Console.WriteLine(url);
+            Console.WriteLine(string.Format("encrypted: {0}", secure));
 
             using var channel = GrpcChannel.ForAddress(url);
             var client = new Greeter.GreeterClient(channel);
