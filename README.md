@@ -61,15 +61,7 @@ Prepare for deployment and fill-in values, modify ingess template (without host)
 helm create charts
 ```
 
-Deploy to AKS with port 80
-
-```bash
-helm install jjgrpcserver charts
-```
-
-Check service is running - OK - getting message.
-
-Balancing problem
+Balancing problem with gRpc
 
 - multiplexing of multiple HTTP/2 calls over a single TCP connection
 - scale on client - bad way because of how to manage list of backends
@@ -79,4 +71,24 @@ Balancing problem
   - linkerd (sidecar reverse proxy)
   - Nginx ingress (annotation grpc) or Traefik ingress 
   - AppGw not supported (http/2 backend not supported)
+
+For L4 will deploy Azure Load balancer 
+
+- check using [Azure Load Balancer as internal load balancer](https://docs.microsoft.com/en-us/azure/aks/internal-lb)
+- change Service to type: LoadBalancer. 
+
+For L7 will deploy [Traefik](https://docs.traefik.io/v1.7/user-guide/kubernetes/)) as Ingress
+
+```bash
+helm install traefik stable/traefik --set nodeSelector."kubernetes\.io/os"=linux
+```
+
+Deploy to AKS with port 80
+
+```bash
+helm install jjgrpcserver charts
+```
+
+Check service is running - OK - getting message.
+
 

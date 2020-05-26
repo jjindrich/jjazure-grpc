@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
@@ -19,8 +20,8 @@ namespace jjgrpc_server
         {
             return Task.FromResult(new HelloReply
             {
-                Message = "Hello " + request.Name
-            });
+                Message = "Hello " + request.Name + " from " + Dns.GetHostName()
+        });
         }
     }
 }
