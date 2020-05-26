@@ -20,14 +20,18 @@ service:
 ingress:
   enabled: true
   annotations:
-    kubernetes.io/ingress.class: traefik
+    #kubernetes.io/ingress.class: traefik
+    kubernetes.io/ingress.class: nginx-internal    
   path: /
-  # hosts:
-  #   - 13.69.76.199.xip.io
-  tls: []
-    # - secretName: chart-example-tls
-    #   hosts:
-    #     - chart-example.local
+  hosts:
+    - host: jjaks.jjdev.local
+      paths: 
+        - /
+  #tls: []
+  tls:
+    - secretName: aks-ingress-tls
+      hosts:
+        - jjaks.jjdev.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

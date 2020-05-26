@@ -83,12 +83,25 @@ For L7 will deploy [Traefik](https://docs.traefik.io/v1.7/user-guide/kubernetes/
 helm install traefik stable/traefik --set nodeSelector."kubernetes\.io/os"=linux
 ```
 
-Deploy to AKS with port 80
+For L7 will deploy [Nginx](https://docs.microsoft.com/en-us/azure/aks/ingress-basic)
+
+- [create certificate](https://docs.microsoft.com/en-us/azure/aks/ingress-own-tls) and import
+- my common name jjaks.jjdev.local for internal ingress
+
+```bash
+openssl pkcs12 -in jjaks.pfx -nocerts -out jjaks.key
+openssl pkcs12 -in jjaks.pfx -clcerts -nokeys -out jjaks.crt
+openssl rsa -in jjaks.key -out jjaks-nopass.key
+
+kubectl create secret tls aks-ingress-tls --key jjaks-nopass.key --cert jjaks.crt
+```
+
+Now deploy jjgrpc server to AKS with port 80
 
 ```bash
 helm install jjgrpcserver charts
 ```
 
-Check service is running - OK - getting message.
+Check service is running on https://jjaks.jjdev.local - OK - getting message.
 
 
