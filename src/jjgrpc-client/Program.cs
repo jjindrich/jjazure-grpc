@@ -42,8 +42,8 @@ namespace jjgrpc_client
                   new HelloRequest { Name = "GreeterClient" });
                 Console.WriteLine(DateTime.Now.ToString() + "Greeting: " + reply.Message);
 
-                Console.WriteLine("...sleep 5 secs");
-                Thread.Sleep(new TimeSpan(hours: 0, minutes: 0, seconds: 5));
+                Console.WriteLine("...sleep 2 secs");
+                Thread.Sleep(new TimeSpan(hours: 0, minutes: 0, seconds: 2));
             }
         }
     }
