@@ -96,10 +96,62 @@ Now deploy jjgrpc server to AKS with port 80
 helm install jjgrpcserver charts
 ```
 
-Check service is running on https://jjaks.jjdev.local - OK - getting message.
+**Test balancing with L7 balancer **
+
+Check service is running on https://jjaks.jjdev.local using Nginx balancer
 
 ```
 jjgrpc-client.exe https://jjaks.jjdev.local
 ```
 
+Response is comming for different backend containers !
 
+```
+5/27/2020 1:16:18 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:16:23 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-8nz57
+...sleep 5 secs
+5/27/2020 1:16:28 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-rxh5m
+...sleep 5 secs
+5/27/2020 1:16:33 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:16:38 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-8nz57
+...sleep 5 secs
+5/27/2020 1:16:43 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-rxh5m
+...sleep 5 secs
+5/27/2020 1:16:48 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:16:53 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-8nz57
+...sleep 5 secs
+5/27/2020 1:16:58 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-rxh5m
+```
+
+**Test balancing with L4 balancer **
+
+Check service is running on http://<public-ip> using Azure Load Balancer
+
+```
+jjgrpc-client.exe http://51.105.224.92
+```
+
+Response is comming for same backend container !
+
+```
+5/27/2020 1:18:18 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:18:23 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:18:28 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:18:33 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:18:38 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:18:43 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:18:48 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:18:53 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+...sleep 5 secs
+5/27/2020 1:18:58 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
+```

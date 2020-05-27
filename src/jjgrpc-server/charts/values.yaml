@@ -13,8 +13,8 @@ nameOverride: "jjgrpcserver"
 fullnameOverride: "jjgrpcserver"
 
 service:
-  type: ClusterIP
-  #type: LoadBalancer
+  #type: ClusterIP
+  type: LoadBalancer
   port: 80
 
 ingress:

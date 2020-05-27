@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Net.Client;
 using jjgrpc_server;
@@ -35,11 +36,15 @@ namespace jjgrpc_client
 
             using var channel = GrpcChannel.ForAddress(url);
             var client = new Greeter.GreeterClient(channel);
-            var reply = await client.SayHelloAsync(
-                              new HelloRequest { Name = "GreeterClient" });
-            Console.WriteLine("Greeting: " + reply.Message);
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+            while (true)
+            {
+                var reply = await client.SayHelloAsync(
+                  new HelloRequest { Name = "GreeterClient" });
+                Console.WriteLine(DateTime.Now.ToString() + "Greeting: " + reply.Message);
+
+                Console.WriteLine("...sleep 5 secs");
+                Thread.Sleep(new TimeSpan(hours: 0, minutes: 0, seconds: 5));
+            }
         }
     }
 }
