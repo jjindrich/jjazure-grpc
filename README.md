@@ -61,7 +61,7 @@ Prepare for deployment and fill-in values, modify ingess template (without host)
 helm create charts
 ```
 
-Balancing problem with gRpc
+Balancing challenges with gRpc
 
 - multiplexing of multiple HTTP/2 calls over a single TCP connection
 - scale on client - bad way because of how to manage list of backends
@@ -96,7 +96,7 @@ Now deploy jjgrpc server to AKS with port 80
 helm install jjgrpcserver charts
 ```
 
-**Test balancing with L7 balancer **
+**Test balancing with L7 balancer**
 
 Check service is running on https://jjaks.jjdev.local using Nginx balancer
 
@@ -104,7 +104,7 @@ Check service is running on https://jjaks.jjdev.local using Nginx balancer
 jjgrpc-client.exe https://jjaks.jjdev.local
 ```
 
-Response is comming for different backend containers !
+Response is comming for *different* backend containers !
 
 ```
 5/27/2020 1:16:18 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
@@ -112,26 +112,15 @@ Response is comming for different backend containers !
 5/27/2020 1:16:23 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-8nz57
 ...sleep 5 secs
 5/27/2020 1:16:28 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-rxh5m
-...sleep 5 secs
-5/27/2020 1:16:33 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
-...sleep 5 secs
-5/27/2020 1:16:38 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-8nz57
-...sleep 5 secs
-5/27/2020 1:16:43 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-rxh5m
-...sleep 5 secs
-5/27/2020 1:16:48 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
-...sleep 5 secs
-5/27/2020 1:16:53 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-8nz57
-...sleep 5 secs
-5/27/2020 1:16:58 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-rxh5m
 ```
 
-**Test balancing with L4 balancer **
+**Test balancing with L4 balancer**
 
 Check service is running on http://<public-ip> using Azure Load Balancer
 
 ```
-jjgrpc-client.exe http://51.105.224.92
+kubectl get service
+jjgrpc-client.exe http://20.50.8.142
 ```
 
 Response is comming for same backend container !
@@ -142,18 +131,6 @@ Response is comming for same backend container !
 5/27/2020 1:18:23 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
 ...sleep 5 secs
 5/27/2020 1:18:28 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
-...sleep 5 secs
-5/27/2020 1:18:33 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
-...sleep 5 secs
-5/27/2020 1:18:38 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
-...sleep 5 secs
-5/27/2020 1:18:43 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
-...sleep 5 secs
-5/27/2020 1:18:48 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
-...sleep 5 secs
-5/27/2020 1:18:53 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
-...sleep 5 secs
-5/27/2020 1:18:58 PMGreeting: Hello GreeterClient from jjgrpcserver-7499cdbd57-kwbzv
 ```
 
 ![Result](media/result.png)
