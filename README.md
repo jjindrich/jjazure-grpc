@@ -77,23 +77,17 @@ For L4 will deploy Azure Load balancer
 - check using [Azure Load Balancer as internal load balancer](https://docs.microsoft.com/en-us/azure/aks/internal-lb)
 - change Service to type: LoadBalancer. 
 
-For L7 will deploy [Traefik](https://docs.traefik.io/v1.7/user-guide/kubernetes/)) as Ingress
-
-```bash
-helm install traefik stable/traefik --set nodeSelector."kubernetes\.io/os"=linux
-```
-
 For L7 will deploy [Nginx](https://docs.microsoft.com/en-us/azure/aks/ingress-basic)
 
 - [create certificate](https://docs.microsoft.com/en-us/azure/aks/ingress-own-tls) and import
+- make sure your certificate contains SAN field - check how to generate with [Windows CA](https://www.aventistech.com/2019/08/generate-csr-from-windows-server-with-san-subject-alternative-name/)
 - my common name jjaks.jjdev.local for internal ingress
 
 ```bash
-openssl pkcs12 -in jjaks.pfx -nocerts -out jjaks.key
+openssl pkcs12 -in jjaks.pfx -nocerts -nodes -out jjaks.rsa
 openssl pkcs12 -in jjaks.pfx -clcerts -nokeys -out jjaks.crt
-openssl rsa -in jjaks.key -out jjaks-nopass.key
 
-kubectl create secret tls aks-ingress-tls --key jjaks-nopass.key --cert jjaks.crt
+kubectl create secret tls aks-ingress-tls --key jjaks.rsa --cert jjaks.crt
 ```
 
 Now deploy jjgrpc server to AKS with port 80
@@ -103,5 +97,9 @@ helm install jjgrpcserver charts
 ```
 
 Check service is running on https://jjaks.jjdev.local - OK - getting message.
+
+```
+jjgrpc-client.exe https://jjaks.jjdev.local
+```
 
 

@@ -22,6 +22,7 @@ ingress:
   annotations:
     #kubernetes.io/ingress.class: traefik
     kubernetes.io/ingress.class: nginx-internal    
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
   path: /
   hosts:
     - host: jjaks.jjdev.local
