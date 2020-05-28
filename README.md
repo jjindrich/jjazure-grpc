@@ -61,8 +61,9 @@ Prepare for deployment and fill-in values, modify ingess template (without host)
 helm create charts
 ```
 
-Balancing challenges with gRpc
+Balancing challenges with gRpc 
 
+- https://docs.microsoft.com/en-us/dotnet/architecture/grpc-for-wcf-developers/load-balancing)
 - multiplexing of multiple HTTP/2 calls over a single TCP connection
 - scale on client - bad way because of how to manage list of backends
 - L4 load balancer scalling clients-server (selects one of backend servers)
