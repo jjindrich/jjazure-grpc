@@ -23,6 +23,13 @@ Client
 - define Protos
 - call service
 
+Test call
+
+```
+jjgrpc-client.exe https://localhost:5001
+jjgrpc-client.exe http://localhost:5000
+```
+
 ## Test gRPC server in Azure
 
 ### Build, publish and run docker localy
@@ -135,3 +142,27 @@ Response is comming for same backend container !
 ```
 
 ![Result](media/result.png)
+
+## Using Dapr and gRpc server
+
+Install Dapr - https://github.com/dapr/docs/blob/master/getting-started/environment-setup.md
+
+Run Dapr locally
+
+For Http request (add Http1 to endpoints)
+```
+dapr run --app-id jjgrpcserver --app-port 5000 --port 50000 dotnet .\jjgrpc-server.dll
+```
+call
+```
+curl http://localhost:50000/v1.0/invoke/jjgrpcserver/method
+```
+
+For gRpc request
+
+```
+dapr run --app-id jjgrpcserver --app-port 5000 --protocol grpc --grpc-port 50000 dotnet .\jjgrpc-server.dll
+```
+
+TODO: cannot call service
+
