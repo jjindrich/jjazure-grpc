@@ -16,7 +16,7 @@ namespace TestGrpcWithDapr.Services
         {
             return Task.FromResult(new HelloReply
             {
-                Message = "Hello " + request.Name
+                Message = "JJ Hello " + request.Name
             });
         }
     }

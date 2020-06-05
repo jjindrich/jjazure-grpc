@@ -50,6 +50,11 @@
                 "/Views": "${workspaceFolder}/Views"
             },
             "postDebugTask": "daprd-down"
+        },
+        {
+            "name": "Local Process with Kubernetes (Preview)",
+            "type": "dev-spaces-connect-configuration",
+            "request": "launch"
         }
     ]
 }

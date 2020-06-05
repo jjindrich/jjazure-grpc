@@ -14,6 +14,7 @@ namespace TestGrpcWithDapr
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+            services.AddSingleton<GreeterService>();
             //services.AddDaprClient(builder => builder.UseEndpoint("http://localhost:5000"));
         }
 

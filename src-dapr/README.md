@@ -1,4 +1,7 @@
 # SayHello grpc example via DAPR
+
+Sample taken from https://github.com/GennadiiSvichinskyi/test-grpc-dapr
+
 ---
 This is a demo project for demonstating how to use grpc client-service collaboration via [DAPR](https://dapr.io/)
 # Getting Started
@@ -13,7 +16,7 @@ We recommend installing [Visual Studio 2019 v16.4](https://visualstudio.microsof
 ---
 ## Run Server locally
 Assuming that you have DAPR running open command line and go to the directory with TestGrpcWithDapr.csproj. Then run the command  
-`dapr run --app-id testGrpcDaprService --app-port 5000 --protocol grpc --port 50001--log-level debug dotnet run`
+`dapr run --app-id testGrpcDaprService --app-port 5000 --protocol grpc --grpc-port 50001 --log-level debug dotnet run`
 
 ## Run Client locally
 Open a second command line, go to the directory with TestGrpcWithDapr.Client.csproj and run the command  

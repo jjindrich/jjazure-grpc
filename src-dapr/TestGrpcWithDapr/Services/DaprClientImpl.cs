@@ -13,10 +13,12 @@ namespace TestGrpcWithDapr.Services
     public class DaprClientImpl : DaprClient.DaprClientBase
     {
         private readonly ILogger<DaprClientImpl> _logger;
+        private readonly GreeterService _greeterService;
 
-        public DaprClientImpl(ILogger<DaprClientImpl> logger)
+        public DaprClientImpl(ILogger<DaprClientImpl> logger, GreeterService greeterService)
         {
             _logger = logger;
+            _greeterService = greeterService;
         }
 
         public override async Task<InvokeResponse> OnInvoke(InvokeRequest request, ServerCallContext context)
@@ -26,18 +28,16 @@ namespace TestGrpcWithDapr.Services
                 case "SayHello":
                     var requestString = request.Data.Value?.ToStringUtf8();
                     var requestHelloRequest = System.Text.Json.JsonSerializer.Deserialize<HelloRequest>(requestString);
-                    var msg = new HelloReply {Message = $"Hello, {requestHelloRequest.Name}"};
-                    var serMsg = new JsonFormatter(new JsonFormatter.Settings(false)).Format(msg);
+                    var reply = await _greeterService.SayHello(requestHelloRequest, context);
+                    var formattedReply = new JsonFormatter(new JsonFormatter.Settings(false)).Format(reply);
                     var any = new Any
                     {
                         TypeUrl = HelloReply.Descriptor.FullName,
-                        Value = ByteString.CopyFrom(serMsg, Encoding.UTF8)
+                        Value = ByteString.CopyFrom(formattedReply, Encoding.UTF8)
                     };
                     #region Console Debug
                     Console.WriteLine($"Received request: {requestHelloRequest}");
-                    Console.WriteLine($"Serialized response data: {serMsg}");
-                    Console.WriteLine($"Deserialized response data with .Net Core serializer: {System.Text.Json.JsonSerializer.Deserialize<HelloReply>(serMsg).Message}");
-                    Console.WriteLine($"Deserialized response data with Newtonsort serializer: {JsonConvert.DeserializeObject<HelloReply>(serMsg).Message}");
+                    Console.WriteLine($"reply from Greeter: {reply}");
                     #endregion
                     var response = new InvokeResponse()
                     {
